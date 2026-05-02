@@ -1,4 +1,4 @@
-from scripts.config import load_config
+from scripts.configure.config import load_config
 from email import policy
 from email.parser import BytesParser
 import pandas as pd
