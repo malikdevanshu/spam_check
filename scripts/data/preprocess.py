@@ -1,6 +1,5 @@
 import re 
 import nltk
-from scripts.data.Ingestion import load_data
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 nltk.download('stopwords')
@@ -38,3 +37,6 @@ class Preprocessor:
             raise ValueError("data must contain the text column")
         data["processed_text"] = data["text"].apply(self.preprocess_text)
         return data
+    
+ 
+    

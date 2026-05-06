@@ -1,23 +1,42 @@
+import os
 from pathlib import Path
-import urllib.request
+import requests
 import tarfile
+from bs4 import BeautifulSoup
+from urllib.parse import urljoin
+import io
 
-data_dir = Path(__file__).resolve().parent / "data" / "raw" 
-data_dir.mkdir(parents=True, exist_ok=True)
+def download_and_extract_files(page_url, path):
+    os.makedirs(path, exist_ok=True )
 
-base_url = "https://spamassassin.apache.org/old/publiccorpus/"
+    response = requests.get(page_url)
+    response.raise_for_status
 
-files = [
-    "20030228_easy_ham.tar.bz2",
-    "20030228_spam.tar.bz2"
-]
+    soup = BeautifulSoup(response.text, "html.parser")
 
-for file in files:
-    url = base_url + file
-    download_path = data_dir / file
+    zip_links = [
+        urljoin(page_url, link["href"])
+        for link in soup.find_all("a", href=True)
+        if link["href"].lower().endswith(".tar.bz2")
+    ]
+        
+    for zip_url in zip_links:
 
-    urllib.request.urlretrieve(url, download_path)
+        zip_response = requests.get(zip_url)
+        zip_response.raise_for_status()
 
-    with tarfile.open(download_path, "r:bz2") as tar:
-        tar.extractall(data_dir)
+        zip_data = io.BytesIO(zip_response.content)
+
+        with tarfile.open(fileobj=zip_data, mode="r:bz2") as zip_ref:
+            zip_ref.extractall(path)
+    print("Done!")
+
+
+         
+
+
+
+
+
+
 

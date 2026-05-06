@@ -1,8 +1,6 @@
-from scripts.configure.config import load_config
 from email import policy
 from email.parser import BytesParser
 import pandas as pd
-from pathlib import Path
 
 
 def text_from_email(path):
@@ -28,9 +26,7 @@ def text_from_email(path):
 
     return "\n".join(parts)
 
-def load_data():
-    config = load_config()
-    data_dir = Path(config["paths"]["raw_data_path"])
+def load_data(data_path):
 
     folders = {
         "easy_ham": 0,
@@ -40,7 +36,7 @@ def load_data():
     rows = []
 
     for folder_name, label in folders.items():
-        folder_path = data_dir / folder_name
+        folder_path = data_path / folder_name
 
         for file_path in folder_path.iterdir():
             if file_path.is_file():
