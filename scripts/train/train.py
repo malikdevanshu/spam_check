@@ -2,9 +2,9 @@ import pandas as pd
 
 from scripts.train.utils import (
     get_config_values,
+    get_model_paths,
     get_models,
     load_and_prepare_data,
-    get_model_paths,
 )
 
 
@@ -13,7 +13,7 @@ def train_models():
     model_dir = config_values["model_dir"]
     model_dir.mkdir(parents=True, exist_ok=True)
 
-    X_train, X_test, y_train, y_test = load_and_prepare_data()
+    x_train, x_test, y_train, y_test = load_and_prepare_data()  # noqa: RUF059
     models = get_models()
 
     results = []
@@ -22,7 +22,7 @@ def train_models():
         print(f"\nTraining baseline model: {model_name}")
 
         model = classifier_class()
-        model.train(X_train, y_train)
+        model.train(x_train, y_train)
 
         model_path, vectoriser_path, _ = get_model_paths(
             model_name=model_name,
@@ -34,19 +34,21 @@ def train_models():
         print(f"Saved model to: {model_path}")
         print(f"Saved vectoriser to: {vectoriser_path}")
 
-        results.append({
-            "model_name": model_name,
-            "stage": "baseline_training",
-            "model_path": str(model_path),
-            "vectoriser_path": str(vectoriser_path),
-        })
+        results.append(
+            {
+                "model_name": model_name,
+                "stage": "baseline_training",
+                "model_path": str(model_path),
+                "vectoriser_path": str(vectoriser_path),
+            }
+        )
 
     results_df = pd.DataFrame(results)
 
     results_path = model_dir / "baseline_training_results.csv"
     results_df.to_csv(results_path, index=False)
 
-    print(f"\nBaseline training complete.")
+    print("\nBaseline training complete.")
     print(f"Results saved to: {results_path}")
 
     return results_df

@@ -3,13 +3,12 @@ from pathlib import Path
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 
+from scripts.classifiers.lgrs import LogisticRegressionClassifier
+from scripts.classifiers.naive_bayes import NaiveBayesClassifier
+from scripts.classifiers.svm import SVMClassifier
+from scripts.config.config import load_config
 from scripts.data.Ingestion import load_data
 from scripts.data.preprocess import Preprocessor
-from scripts.config.config import load_config
-
-from scripts.classifiers.naive_bayes import NaiveBayesClassifier
-from scripts.classifiers.lgrs import LogisticRegressionClassifier
-from scripts.classifiers.svm import SVMClassifier
 
 
 def get_config_values():
@@ -39,7 +38,6 @@ def get_param_grids():
             "vectoriser__max_df": [0.7, 0.9],
             "classifier__alpha": [0.1, 0.5, 1.0],
         },
-
         "logistic_regression": {
             "vectoriser__max_features": [1000, 1500, 2000],
             "vectoriser__min_df": [2, 5],
@@ -48,7 +46,6 @@ def get_param_grids():
             "classifier__C": [0.1, 1, 10],
             "classifier__solver": ["liblinear", "lbfgs"],
         },
-
         "svm": {
             "vectoriser__max_features": [1000, 1500, 2000],
             "vectoriser__min_df": [2, 5],
@@ -75,11 +72,11 @@ def load_and_prepare_data():
     preprocessor = Preprocessor()
     data = preprocessor.preprocess(data)
 
-    X = data["processed_text"]
+    x = data["processed_text"]
     y = data["label"]
 
     return train_test_split(
-        X,
+        x,
         y,
         test_size=config_values["test_size"],
         random_state=config_values["random_state"],
@@ -90,10 +87,12 @@ def load_and_prepare_data():
 def build_pipeline_from_classifier(classifier_class):
     model = classifier_class()
 
-    return Pipeline([
-        ("vectoriser", model.vectoriser),
-        ("classifier", model.classifier),
-    ])
+    return Pipeline(
+        [
+            ("vectoriser", model.vectoriser),
+            ("classifier", model.classifier),
+        ]
+    )
 
 
 def get_model_paths(model_name, model_type):

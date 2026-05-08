@@ -10,10 +10,10 @@ class NaiveBayesClassifier(BaseClassifier):
         self.vectoriser = CountVectorizer(**BaseClassifier.VECTORIZER_PARAMS)
         self.classifier = MultinomialNB()
 
-    def train(self, X_train, y_train):
-        X_train_vectorized = self.vectoriser.fit_transform(X_train).toarray()
-        self.classifier.fit(X_train_vectorized, y_train)
+    def train(self, x_train, y_train):
+        x_train_vectorized = self.vectoriser.fit_transform(x_train).toarray()
+        self.classifier.fit(x_train_vectorized, y_train)
 
-    def predict(self, X_test):
-        X_test_vectorized = self.vectoriser.transform(X_test)
-        return self.classifier.predict(X_test_vectorized)    
+    def predict(self, x_test):
+        x_test_vectorized = self.vectoriser.transform(x_test)
+        return self.classifier.predict(x_test_vectorized)

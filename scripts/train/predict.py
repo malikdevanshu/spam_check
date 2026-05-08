@@ -3,17 +3,16 @@ import argparse
 import pandas as pd
 
 from scripts.data.preprocess import Preprocessor
-from scripts.train.utils import (
-    get_models,
-    get_model_paths,
-)
+from scripts.train.utils import get_model_paths, get_models
 
 
 def predict_texts(model_name, texts, model_type="tuned"):
     models = get_models()
 
     if model_name not in models:
-        raise ValueError(f"Unknown model name: {model_name}")
+        sub = model_name
+        msg = f"Unknown model name: {sub}"
+        raise ValueError(msg)
 
     model_path, vectoriser_path, _ = get_model_paths(
         model_name=model_name,
@@ -21,9 +20,9 @@ def predict_texts(model_name, texts, model_type="tuned"):
     )
 
     if not model_path.exists() or not vectoriser_path.exists():
-        raise FileNotFoundError(
-            f"Model/vectoriser files not found for {model_name} {model_type}"
-        )
+        sub = model_name
+        msg = f"Model/vectoriser files not found in {sub}"
+        raise FileNotFoundError(msg)
 
     classifier_class = models[model_name]
 
@@ -37,12 +36,12 @@ def predict_texts(model_name, texts, model_type="tuned"):
 
     predictions = model.predict(data["processed_text"])
 
-    results = pd.DataFrame({
-        "text": texts,
-        "prediction": predictions,
-    })
-
-    return results
+    return pd.DataFrame(
+        {
+            "text": texts,
+            "prediction": predictions,
+        }
+    )
 
 
 def main():

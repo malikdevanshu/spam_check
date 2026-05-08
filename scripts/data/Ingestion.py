@@ -1,37 +1,35 @@
+import contextlib
+import pathlib
+
 from email import policy
 from email.parser import BytesParser
+
 import pandas as pd
 
 
 def text_from_email(path):
-    with open(path, "rb") as f:
+    with pathlib.Path(path).open("rb") as f:
         msg = BytesParser(policy=policy.default).parse(f)
 
-  
     parts = []
 
     if msg.is_multipart():
         for part in msg.walk():
             content_type = part.get_content_type()
             if content_type == "text/plain":
-                try:
+                with contextlib.suppress(Exception):
                     parts.append(part.get_content())
-                except Exception:
-                    pass
+
     else:
-        try:
+        with contextlib.suppress(Exception):
             parts.append(msg.get_content())
-        except Exception:
-            pass
 
     return "\n".join(parts)
 
+
 def load_data(data_path):
 
-    folders = {
-        "easy_ham": 0,
-        "spam": 1
-    }
+    folders = {"easy_ham": 0, "spam": 1}
 
     rows = []
 
@@ -42,14 +40,10 @@ def load_data(data_path):
             if file_path.is_file():
                 text = text_from_email(file_path)
 
-                rows.append({
-                    "filename": str(file_path),
-                    "label": label,
-                    "text": text
-                })
+                rows.append(
+                    {"filename": str(file_path), "label": label, "text": text}
+                )
 
     df = pd.DataFrame(rows)
-    df = df[df["text"].str.strip() != ""]
 
-
-    return df
+    return df[df["text"].str.strip() != ""]

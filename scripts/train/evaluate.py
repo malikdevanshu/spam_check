@@ -4,9 +4,9 @@ from sklearn.metrics import accuracy_score, classification_report
 
 from scripts.train.utils import (
     get_config_values,
+    get_model_paths,
     get_models,
     load_and_prepare_data,
-    get_model_paths,
 )
 
 
@@ -14,7 +14,7 @@ def evaluate_models(model_type="tuned"):
     config_values = get_config_values()
     model_dir = config_values["model_dir"]
 
-    X_train, X_test, y_train, y_test = load_and_prepare_data()
+    x_train, x_test, y_train, y_test = load_and_prepare_data()  # noqa: RUF059
 
     models = get_models()
     results = []
@@ -34,7 +34,7 @@ def evaluate_models(model_type="tuned"):
         model = classifier_class()
         model.load_model(model_path, vectoriser_path)
 
-        y_pred = model.predict(X_test)
+        y_pred = model.predict(x_test)
 
         accuracy = accuracy_score(y_test, y_pred)
         report = classification_report(y_test, y_pred)
@@ -42,20 +42,22 @@ def evaluate_models(model_type="tuned"):
         print(f"{model_name} accuracy: {accuracy:.4f}")
         print(report)
 
-        results.append({
-            "model_name": model_name,
-            "stage": f"{model_type}_evaluation",
-            "accuracy": accuracy,
-            "model_path": str(model_path),
-            "vectoriser_path": str(vectoriser_path),
-        })
+        results.append(
+            {
+                "model_name": model_name,
+                "stage": f"{model_type}_evaluation",
+                "accuracy": accuracy,
+                "model_path": str(model_path),
+                "vectoriser_path": str(vectoriser_path),
+            }
+        )
 
     results_df = pd.DataFrame(results)
 
     results_path = model_dir / f"{model_type}_evaluation_results.csv"
     results_df.to_csv(results_path, index=False)
 
-    print(f"\nEvaluation complete.")
+    print("\nEvaluation complete.")
     print(f"Results saved to: {results_path}")
 
     return results_df

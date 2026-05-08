@@ -4,18 +4,17 @@ from joblib import dump, load
 
 
 class BaseClassifier(ABC):
-    VECTORIZER_PARAMS = {
-        'max_features': 1500,
-        'min_df': 5,
-        'max_df': 0.7
-    }
-
     def __init__(self):
+        self.VECTORIZER_PARAMS = {
+            "max_features": 1500,
+            "min_df": 5,
+            "max_df": 0.7,
+        }
         self.classifier = None
         self.vectoriser = None
 
     @abstractmethod
-    def train(self, X_train, y_train):
+    def train(self, x_train, y_train):
         pass
 
     def save_model(self, model_path, vectoriser_path):
