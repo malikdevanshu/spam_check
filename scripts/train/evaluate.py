@@ -1,6 +1,10 @@
 import pandas as pd
-
-from sklearn.metrics import accuracy_score, classification_report
+import argparse
+from sklearn.metrics import (
+    accuracy_score,
+    classification_report,
+    confusion_matrix,
+)
 
 from scripts.train.utils import (
     get_config_values,
@@ -38,9 +42,11 @@ def evaluate_models(model_type):
 
         accuracy = accuracy_score(y_test, y_pred)
         report = classification_report(y_test, y_pred)
+        matrix = confusion_matrix(y_test, y_pred)
 
         print(f"{model_name} accuracy: {accuracy:.4f}")
         print(report)
+        print(matrix)
 
         results.append(
             {
@@ -63,5 +69,18 @@ def evaluate_models(model_type):
     return results_df
 
 
+def main():
+    parser = argparse.ArgumentParser(description="Tuned or Baseline Model")
+    parser.add_argument(
+        "--model",
+        choices=["tuned", "baseline"],
+        default="baseline",
+        help="Model to use for prediction.",
+    )
+
+    args = parser.parse_args()
+    evaluate_models(model_type=args.model)
+
+
 if __name__ == "__main__":
-    evaluate_models(model_type="baseline")
+    main()

@@ -7,4 +7,4 @@ def load_config():
     config_path = Path(__file__).resolve().parent / "config.yaml"
 
     with Path(config_path).open("r", encoding="utf-8") as f:
-        return yaml.safe_load(f)
+        return yaml.safe_load(f) 

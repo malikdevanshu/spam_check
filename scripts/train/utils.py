@@ -7,7 +7,7 @@ from scripts.classifiers.logistic_regression import LogisticRegressionClassifier
 from scripts.classifiers.naive_bayes import NaiveBayesClassifier
 from scripts.classifiers.svm import SVMClassifier
 from scripts.config.config import load_config
-from scripts.data.ingestion import load_data
+from scripts.data.Ingestion import load_data
 from scripts.data.preprocess import Preprocessor
 
 
@@ -34,27 +34,27 @@ def get_models():
 def get_param_grids():
     return {
         "naive_bayes": {
-            "vectoriser__max_features": [1000, 1500, 2000],
-            "vectoriser__min_df": [2, 5],
-            "vectoriser__max_df": [0.7, 0.9],
-            "classifier__alpha": [0.1, 0.5, 1.0],
+            "vectoriser__max_features": [1000, 1500],
+            "vectoriser__min_df": [3, 5],
+            "vectoriser__max_df": [0.8],
+            "classifier__alpha": [0.5, 1.0],
         },
         "logistic_regression": {
-            "vectoriser__max_features": [1000, 1500, 2000],
-            "vectoriser__min_df": [2, 5],
-            "vectoriser__max_df": [0.7, 0.9],
-            "vectoriser__ngram_range": [(1, 1), (1, 2)],
-            "classifier__C": [0.1, 1, 10],
-            "classifier__solver": ["liblinear", "lbfgs"],
+            "vectoriser__max_features": [1500, 2000],
+            "vectoriser__min_df": [3, 5],
+            "vectoriser__max_df": [0.8],
+            "vectoriser__ngram_range": [(1, 1)],
+            "classifier__C": [1, 4],
+            "classifier__solver": ["liblinear"],
         },
         "svm": {
-            "vectoriser__max_features": [1000, 1500, 2000],
-            "vectoriser__min_df": [2, 5],
-            "vectoriser__max_df": [0.7, 0.9],
-            "vectoriser__ngram_range": [(1, 1), (1, 2)],
-            "classifier__C": [0.1, 1, 10],
-            "classifier__kernel": ["linear", "rbf"],
-            "classifier__gamma": ["scale", "auto"],
+            "vectoriser__max_features": [1500],
+            "vectoriser__min_df": [3, 5],
+            "vectoriser__max_df": [0.8],
+            "vectoriser__ngram_range": [(1, 1)],
+            "classifier__C": [1, 10],
+            "classifier__kernel": ["rbf"],
+            "classifier__gamma": ["scale"],
         },
     }
 
