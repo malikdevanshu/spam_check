@@ -73,7 +73,7 @@ def tune_models(cv=5, scoring="accuracy"):
     results_path = model_dir / "grid_search_results.csv"
     results_df.to_csv(results_path, index=False)
 
-    print(f"\nTuning complete.")
+    
     print(f"Grid search results saved to: {results_path}")
 
     return results_df
