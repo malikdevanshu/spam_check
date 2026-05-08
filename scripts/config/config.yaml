@@ -1,4 +1,12 @@
 paths:
   raw_data_path : "data/raw"
   processed_data_path : "data/processed"
-  
+random_state:
+  state: 42
+model_path:
+  path: "scripts/models"
+
+test_size:
+  size: 0.2 
+
+
