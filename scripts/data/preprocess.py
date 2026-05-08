@@ -1,12 +1,8 @@
 import re
 
-import nltk
 
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
-
-nltk.download("stopwords")
-nltk.download("wordnet")
 
 
 class Preprocessor:
@@ -43,5 +39,6 @@ class Preprocessor:
     def preprocess(self, data):
         if "text" not in data.columns:
             raise ValueError("data must contain the text column")
+        data = data.copy()
         data["processed_text"] = data["text"].apply(self.preprocess_text)
         return data

@@ -27,9 +27,16 @@ def download_and_extract_files(page_url, path):
         tar_response = requests.get(tar_url, timeout=10)
         tar_response.raise_for_status()
 
-        zip_data = io.BytesIO(tar_response.content)
+        tar_data = io.BytesIO(tar_response.content)
 
-        with tarfile.open(fileobj=zip_data, mode="r:bz2") as tar_ref:
+        with tarfile.open(fileobj=tar_data, mode="r:bz2") as tar_ref:
             tar_ref.extractall(path, filter="data")
 
     print("Done!")
+
+
+if __name__ == "__main__":
+    download_and_extract_files(
+        page_url="https://spamassassin.apache.org/old/publiccorpus/",
+        path=Path("data/raw"),
+    )

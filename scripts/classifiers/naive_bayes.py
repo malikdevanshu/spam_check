@@ -11,7 +11,7 @@ class NaiveBayesClassifier(BaseClassifier):
         self.classifier = MultinomialNB()
 
     def train(self, x_train, y_train):
-        x_train_vectorized = self.vectoriser.fit_transform(x_train).toarray()
+        x_train_vectorized = self.vectoriser.fit_transform(x_train)
         self.classifier.fit(x_train_vectorized, y_train)
 
     def predict(self, x_test):

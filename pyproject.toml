@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "beautifulsoup4>=4.14.3",
+    "black>=26.3.1",
     "isort>=8.0.1",
     "matplotlib>=3.10.9",
     "mypy>=2.0.0",
@@ -68,5 +69,18 @@ line-ending = "auto"
 preview = false
 docstring-code-format = true
 
-
+[tool.black]
+line-length = 88
+target-version = ["py310"]
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.venv
+  | venv
+  | __pycache__
+  | \.git
+  | data
+  | scripts/models
+)/
+'''
 

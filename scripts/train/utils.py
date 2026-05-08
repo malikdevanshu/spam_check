@@ -3,11 +3,11 @@ from pathlib import Path
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 
-from scripts.classifiers.lgrs import LogisticRegressionClassifier
+from scripts.classifiers.logistic_regression import LogisticRegressionClassifier
 from scripts.classifiers.naive_bayes import NaiveBayesClassifier
 from scripts.classifiers.svm import SVMClassifier
 from scripts.config.config import load_config
-from scripts.data.Ingestion import load_data
+from scripts.data.ingestion import load_data
 from scripts.data.preprocess import Preprocessor
 
 
@@ -15,8 +15,9 @@ def get_config_values():
     config = load_config()
 
     return {
-        "raw_data_path": config["paths"]["raw_data_path"],
+        "raw_data_path": Path(config["paths"]["raw_data_path"]),
         "model_dir": Path(config["model_path"]["path"]),
+        "processed_data_path": Path(config["paths"]["processed_data_path"]),
         "test_size": config["test_size"]["size"],
         "random_state": config["random_state"]["state"],
     }

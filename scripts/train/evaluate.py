@@ -10,7 +10,7 @@ from scripts.train.utils import (
 )
 
 
-def evaluate_models(model_type="tuned"):
+def evaluate_models(model_type):
     config_values = get_config_values()
     model_dir = config_values["model_dir"]
 
@@ -64,4 +64,4 @@ def evaluate_models(model_type="tuned"):
 
 
 if __name__ == "__main__":
-    evaluate_models(model_type="tuned")
+    evaluate_models(model_type="baseline")
