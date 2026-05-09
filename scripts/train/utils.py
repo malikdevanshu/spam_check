@@ -3,7 +3,9 @@ from pathlib import Path
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 
-from scripts.classifiers.logistic_regression import LogisticRegressionClassifier
+from scripts.classifiers.logistic_regression import (
+    LogisticRegressionClassifier,
+)
 from scripts.classifiers.naive_bayes import NaiveBayesClassifier
 from scripts.classifiers.svm import SVMClassifier
 from scripts.config.config import load_config
