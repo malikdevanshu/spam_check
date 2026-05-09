@@ -1,22 +1,27 @@
 [project]
 name = "spam-check"
 version = "0.1.0"
-description = "Add your description here"
+description = "Dependencies necessary to run spam check"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "beautifulsoup4>=4.14.3",
-    "black>=26.3.1",
-    "isort>=8.0.1",
     "matplotlib>=3.10.9",
-    "mypy>=2.0.0",
     "nltk>=3.9.4",
     "pandas>=2.3.3",
     "pyyaml>=6.0.3",
     "requests>=2.33.1",
-    "ruff>=0.15.12",
     "scikit-learn>=1.7.2",
     "seaborn>=0.13.2",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+    "mypy>=2.0.0",
+    "ruff>=0.15.12",
+    "isort>=8.0.1",
+    "black>=26.3.1",
 ]
 
 [tool.isort]
@@ -57,6 +62,10 @@ ignore = [
 fixable = ["ALL"]
 unfixable = []
 preview = true
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S101"]
+"test_*.py" = ["S101"]
 
 [tool.ruff.lint.pylint]
 max-locals = 18
