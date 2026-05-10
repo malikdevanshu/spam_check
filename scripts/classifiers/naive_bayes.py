@@ -7,6 +7,7 @@ from .base_classifier import BaseClassifier
 class NaiveBayesClassifier(BaseClassifier):
     def __init__(self):
         super().__init__()
+        self.VECTORIZER_PARAMS = BaseClassifier.VECTORIZER_PARAMS
         self.vectoriser = CountVectorizer(**BaseClassifier.VECTORIZER_PARAMS)
         self.classifier = MultinomialNB()
 
