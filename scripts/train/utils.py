@@ -65,8 +65,9 @@ def get_param_grids():
             "vectoriser__min_df": [3, 5],
             "vectoriser__max_df": [0.8],
             "vectoriser__ngram_range": [(1, 1)],
-            "classifier__criterion": ["gini"],
-            "classifier__max_depth": [5]
+            "classifier__criterion": ["gini", "entropy"],
+            "classifier__splitter": ["best"],
+            "classifier__max_depth": [14],
         }
     }
 
