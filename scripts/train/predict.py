@@ -49,7 +49,7 @@ def main():
 
     parser.add_argument(
         "--model",
-        choices=["naive_bayes", "logistic_regression", "svm"],
+        choices=["naive_bayes", "logistic_regression", "svm", "decision_tree"],
         default="logistic_regression",
         help="Model to use for prediction.",
     )

@@ -10,6 +10,7 @@ class BaseClassifier(ABC):
         "max_df": 0.7,
     }
 
+
     def __init__(self):
         self.classifier = None
         self.vectoriser = None

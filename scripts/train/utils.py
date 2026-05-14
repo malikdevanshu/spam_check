@@ -8,6 +8,7 @@ from scripts.classifiers.logistic_regression import (
 )
 from scripts.classifiers.naive_bayes import NaiveBayesClassifier
 from scripts.classifiers.svm import SVMClassifier
+from scripts.classifiers.decision_tree import Decision_classifier
 from scripts.config.config import load_config
 from scripts.data.Ingestion import load_data
 from scripts.data.preprocess import Preprocessor
@@ -30,6 +31,7 @@ def get_models():
         "naive_bayes": NaiveBayesClassifier,
         "logistic_regression": LogisticRegressionClassifier,
         "svm": SVMClassifier,
+        "decision_tree": Decision_classifier,
     }
 
 
@@ -58,6 +60,14 @@ def get_param_grids():
             "classifier__kernel": ["rbf"],
             "classifier__gamma": ["scale"],
         },
+        "decision_tree": {
+            "vectoriser__max_features": [1500],
+            "vectoriser__min_df": [3, 5],
+            "vectoriser__max_df": [0.8],
+            "vectoriser__ngram_range": [(1, 1)],
+            "classifier__criterion": ["gini"],
+            "classifier__max_depth": [5]
+        }
     }
 
 
