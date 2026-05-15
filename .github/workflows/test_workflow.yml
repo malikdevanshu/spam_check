@@ -1,32 +1,38 @@
-name : pytest
-on : 
-    workflow_dispatch
+name: pytest
+
+on:
+  workflow_dispatch:
+
 jobs:
-    job-1:
-        runs-on : ubuntu-latest
-        steps:
-            - uses:  actions/checkout@v6
-            - run: pip install uv
-            - run: uv sync
-    job-2: 
-        needs: job-1
-        runs-on: ubuntu-latest
-        steps:
-            - run: uv run python -m scripts.data.download_nltk
-            - run: uv run python -m scripts.data.download
-    job-3:
-        needs: job-2
-        runs-on: ubuntu-latest
-        steps:
-            - run: uv run python -m scripts.train.train
-            - run: uv run python -m scripts.train.evaluate --model baseline
-            
-    job-4:
-        needs: job-3
-        runs-on: ubuntu-latest
-        steps:
-            - run: uv run python -m scripts.train.tuning
-            - run: uv run python -m scripts.train.evaluate --model tuned
+  train-and-evaluate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Show files
+        run: pip install uv 
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Download NLTK data
+        run: uv run python -m scripts.data.download_nltk
+
+      - name: Download data
+        run: uv run python -m scripts.data.download
+
+      - name: Train baseline model
+        run: uv run python -m scripts.train.train
+
+      - name: Evaluate baseline model
+        run: uv run python -m scripts.train.evaluate --model baseline
+
+      - name: Tune model
+        run: uv run python -m scripts.train.tuning
+
+      - name: Evaluate tuned model
+        run: uv run python -m scripts.train.evaluate --model tuned
 
             
 
