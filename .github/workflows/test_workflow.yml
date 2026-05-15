@@ -6,6 +6,7 @@ jobs:
         runs-on : ubuntu-latest
         steps:
             - uses: actions/setup-node@v6
+            - run: pip install uv
             - run: uv sync
     job-2: 
         needs: job-1
@@ -26,7 +27,7 @@ jobs:
         steps:
             - run: uv run python -m scripts.train.tuning
             - run: uv run python -m scripts.train.evaluate --model tuned
-                    
+
             
 
 
