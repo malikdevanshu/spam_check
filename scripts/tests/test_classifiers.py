@@ -14,6 +14,7 @@ CLASSIFIERS = [
     Decision_classifier,
 ]
 
+
 @pytest.mark.parametrize("classifier_class", CLASSIFIERS)
 def test_classifier_can_train_and_predict(classifier_class):
     x_train = [
@@ -46,6 +47,7 @@ def test_classifier_can_train_and_predict(classifier_class):
     assert len(predictions) == 2
     assert set(predictions).issubset({0, 1})
 
+
 @pytest.mark.parametrize("classifier_class", CLASSIFIERS)
 def test_classifier_save_and_load(tmp_path, classifier_class):
     x_train = [
@@ -77,7 +79,6 @@ def test_classifier_save_and_load(tmp_path, classifier_class):
     vectoriser_path = tmp_path / "vectoriser.joblib"
 
     model.save_model(model_path, vectoriser_path)
-
 
     original_prediction = model.predict(["free money"])
 

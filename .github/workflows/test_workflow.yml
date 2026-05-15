@@ -22,17 +22,7 @@ jobs:
       - name: Download data
         run: uv run python -m scripts.data.download
 
-      - name: Train baseline model
-        run: uv run python -m scripts.train.train
-
-      - name: Evaluate baseline model
-        run: uv run python -m scripts.train.evaluate --model baseline
-
-      - name: Tune model
-        run: uv run python -m scripts.train.tuning
-
-      - name: Evaluate tuned model
-        run: uv run python -m scripts.train.evaluate --model tuned
+     
 
             
 

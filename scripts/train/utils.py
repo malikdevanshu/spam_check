@@ -68,7 +68,7 @@ def get_param_grids():
             "classifier__criterion": ["gini", "entropy"],
             "classifier__splitter": ["best"],
             "classifier__max_depth": [14],
-        }
+        },
     }
 
 
