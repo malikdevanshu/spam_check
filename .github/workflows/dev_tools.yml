@@ -10,6 +10,9 @@ jobs:
         steps: 
             - uses: actions/checkout@v4
 
+            - name: Install_uv
+              run: pip install uv
+
             - name: Install_Dependencies
               run: uv sync
 
