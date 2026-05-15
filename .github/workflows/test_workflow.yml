@@ -11,8 +11,22 @@ jobs:
         needs: job-1
         runs-on: ubuntu-latest
         steps:
-            - run: uv run python -m scripts/tests/test_classifiers.py
-            - run: uv run python -m scripts/tests/test_ingestion.py
+            - run: uv run python -m scripts.data.download_nltk
+            - run: uv run python -m scripts.data.download
+    job-3:
+        needs: job-2
+        runs-on: ubuntu-latest
+        steps:
+            - run: uv run python -m scripts.train.train
+            - run: uv run python -m scripts.train.evaluate --model baseline
+            
+    job-4:
+        needs: job-3
+        runs-on: ubuntu-latest
+        steps:
+            - run: uv run python -m scripts.train.tuning
+            - run: uv run python -m scripts.train.evaluate --model tuned
+                    
             
 
 
