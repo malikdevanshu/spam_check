@@ -1,0 +1,36 @@
+name: dev_tools
+
+on:
+    workflow_dispatch:
+
+jobs:
+    linting_formatting:
+        runs-on: ubuntu-latest
+        
+        steps: 
+            - uses: actions/checkout@v4
+
+            - name: Install_Dependencies
+              run: uv sync
+
+            - name: Check_isort
+              run: uv run isort .
+            
+            - name: Check_ruff
+              run: uv run ruff check .
+              
+            - name: Check_black
+              run: uv run black . 
+              
+    testing:
+        runs-on: ubuntu-latest
+        
+        needs: linting_formatting
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: run_pytest
+              run: uv run pytest .
+
+                
+
