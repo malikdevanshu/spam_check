@@ -5,7 +5,7 @@ jobs:
     job-1:
         runs-on : ubuntu-latest
         steps:
-            - uses: actions/setup-node@v6
+            - uses:  actions/checkout@v6
             - run: pip install uv
             - run: uv sync
     job-2: 
